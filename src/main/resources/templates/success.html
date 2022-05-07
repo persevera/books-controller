@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员-图书管理系统</title>
+
+</head>
+<script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
+<script type="text/javascript">
+    $(function (){
+        $("#mysrc").attr("src","/more")
+        $("#addbook").click(function (){
+            $("#mysrc").attr("src","/book");
+
+        })
+        $("#addstduent").click(function (){
+            $("#mysrc").attr("src","/borrow");
+        })
+        $("#xujie").click(function (){
+            $("#mysrc").attr("src","/again");
+        })
+        $("#huanshu").click(function (){
+            $("#mysrc").attr("src","/human")
+        })
+        $("#findjie").click(function (){
+            $("#mysrc").attr("src","/findjie");
+        })
+        $("#findbook").click(function (){
+            $("#mysrc").attr("src","/booking")
+        })
+        $("#findhistory").click(function (){
+            $("#mysrc").attr("src","/other")
+        })
+        $("#findok").click(function (){
+            $("#mysrc").attr("src","/last")
+        })
+        $("#tuichu").click(function () {
+            var url = "tuichu";
+            $.ajax({
+                type: "get",
+                async: false, //同步请求
+                url: url,
+                timeout: 1000,
+            })
+        })
+    })
+</script>
+<style type="text/css">
+    .mybody{
+        height:740px;
+        width:1500px;
+        border:none;
+    }
+    .head{
+        height:100px;
+
+        width:1500px;
+        border:none;
+        font-size: 120%;
+        font-family:fantasy;
+        font-style:normal;
+        font-weight:bold;
+        color: green;
+    }
+    .body{
+        height:630px;
+
+        width:1500px;
+
+        border:none;
+    }
+    .menu{
+        position: absolute;
+        height:630px;
+        width:200px;
+        border-style:ridge;
+        border-left:none;
+        border-top:none;
+        border-bottom:none;
+    }
+    .info{
+        margin-left: 200px;
+        height:630px;
+
+        width:1300px;
+        border:none;
+        /*border-style:solid;*/
+    }
+    .daohang{
+        color:red;
+    }
+
+</style>
+<!--主页面-->
+<div class="mybody">
+<!--头-->
+<div class="head">
+    人生在世匆匆几十年，生命是极其有限的。我们只有树立明确的奋斗目标，才会为行动指出正确的方向，才会在实现目标的过程中少走弯路；我们只有树立明确的目标，才能集中精力在某一职业领域，或某一方面取得较好较快的发展，才能突破自我，形成优势；我们只有树立明确的目标，才能有更积极向上的心态，求知探索的动力，才能不畏艰难险阻，永攀高峰，不畏困难挫折，奋勇前进，才能更好地激发潜能，让生命冲破时空的极限，释放出超强的能量，让自己的人生绚烂绽放。
+</div>
+    <div class="body">
+        <!--导航栏-->
+        <div class="menu">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree">
+
+                <li class="layui-nav-item layui-nav-itemed">
+                   <font color="green" size="4">图书基本信息管理</font>
+                    <dl class="layui-nav-child">
+                       <dd><button  class="daohang" id="addbook">录入新书</button></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <font color="green" size="4">借阅信息管理</font>
+                    <dl class="layui-nav-child">
+                        <dd><button  class="daohang" id="addstduent">录入借阅信息</button></dd>
+                    </dl>
+                    <dl class="layui-nav-child">
+                        <dd><button  class="daohang" id="xujie">续借</button></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <font color="green" size="4">还书管理</font>
+                    <dl class="layui-nav-child">
+                        <dd><button  class="daohang" id="huanshu">还书</button></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <font color="green" size="4">综合查询</font>
+                    <dl class="layui-nav-child">
+                        <dd><button  class="daohang" id="findjie">在借情况查询</button></dd><br>
+                        <dd><button  class="daohang" id="findbook">图书信息查询</button></dd><br>
+                        <dd><button  class="daohang" id="findhistory">图书借阅历史</button></dd><br>
+                        <dd><button  class="daohang" id="findok">学生借阅历史</button></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <font color="green" size="4">用户管理</font>
+                    <dl class="layui-nav-child">
+                  <dd><a href="index">退出登录</a></dd>
+                    </dl>
+                </li>
+
+            </ul>
+
+        </div>
+        <!--信息栏-->
+        <div class="info" id="caozuo">
+            <iframe src="" width="1200px" height="650px" frameborder="1" scrolling="no" name="frame" id="mysrc" class="okg"></iframe>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
+

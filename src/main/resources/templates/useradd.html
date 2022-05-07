@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        body {
+            /*width: 100%;*/
+            /*height: 100%;*/
+            background: url("/static/images/background.jpg") no-repeat;
+            /*background: url("static/images/a.png") no-repeat;*/
+            background-size: cover;
+        }
+
+        #login_form {
+            width: 400px;
+            height: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            background-color: #f2f2f2;
+            opacity: 0.9;
+        }
+
+    </style>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+$(function () {
+    var telStr =/^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/;
+    $("#add").click(function () {
+        $("#nameerror").html("");
+        $("#passworderror").html("");
+        $("#passwordagainerror").html("");
+        $("#info").html("");
+        $("#phonenumbererror").html("");
+        $("#yanzhengererror").html("");
+        $("#message").html("");
+        if ($("#name").val() === "") {
+            $("#nameerror").html("<font color='red' size='0.9'>不能为空</font>");
+        }
+        if ($("#password").val() === "") {
+            $("#passworderror").html("<font color='red' size='0.9'>不能为空</font>");
+        }
+        if ($("#passwordagain").val() === "") {
+            $("#passwordagainerror").html("<font color='red' size='0.9'>不能为空</font>");
+        }else if ($("#password").val() !== $("#passwordagain").val()) {
+            $("#passwordagainerror").html("<font color='red' size='0.9'>两次密码不一致</font>");
+        }
+        if ($("#phonenumber").val() === "") {
+            $("#phonenumbererror").html("<font color='red' size='0.9'>不能为空</font>")
+
+        }else if(!telStr.test($("#phonenumber").val())){
+            $("#phonenumbererror").html("<font color='red' size='0.9'>手机号格式有误</font>")
+
+        }
+        if ($("#yangzheng").val() == "") {
+            $("#yanzhengererror").html("<font color='red' size='0.9'>不能为空</font>");
+        }
+        if($("#yangzheng").val() !==$("#yangzheng").attr("placeholder")){
+            $("#message").html("<font color='red' size='0.9'>验证码输入有误" +
+                "</font>");
+        } else{
+                var url = "addstudent";
+                var data = "name=" + $("#name").val() + "&password=" + $("#password").val() + "&phonenumber=" + $("#phonenumber").val() + "&yanzheng=" + $("#yangzheng").val();
+                $.ajax({
+                    type: "get",
+                    async: false, //同步请求
+                    url: url,
+                    data: data,
+                    timeout: 1000,
+                    success: function (dates) {
+                        if(dates=="注册成功"){
+                            $("#message").html("<font color='green' size='0.9'>注册成功</font>")
+                        }else {
+                            $("#message").html("<font color='red' size='0.9'>该账号已被注册过了</font>")
+                        }
+
+                    },
+                });
+            }
+    })
+$("#getmessage").click(function (){
+    var i=Math.random()*(999999-100000)+100000;
+    var j=parseInt(i,10);
+    $("#yangzheng").attr("placeholder",j);
+})
+
+})
+ </script>
+</head>
+<body>
+
+<div id="wrapper">
+    <div class="layui-container" id="login_form">
+        <div>
+            <h1 style="color: red"><font color="green">图书管理系统</font></h1>
+            <h2>用户注册</h2>
+        </div>
+        <form class="layui-form" id="form" method="get" action="addstudent">
+            <table>
+                <tr>
+                    <td><label class="layui-form-label">姓名:</label></td>
+                    <td> <input type="text" name="name" id="name" autofocus
+                                placeholder="请输入姓名" autocomplete="off" class="layui-input"><td><span id="nameerror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">密码:</label></td>
+                    <td> <input type="password" name="password" id="password" autofocus
+                                placeholder="请输入密码" autocomplete="off" class="layui-input"><td><span id="passworderror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">确认密码:</label></td>
+                    <td> <input type="password" name="passwordagain" id="passwordagain" autofocus
+                                placeholder="请确认密码" autocomplete="off" class="layui-input"><td><span id="passwordagainerror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">手机号:</label></td>
+                    <td> <input type="text" name="phonenumber" id="phonenumber" autofocus
+                                placeholder="请输入手机号" autocomplete="off" class="layui-input"><td><span id="phonenumbererror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">验证码:</label></td>
+                    <td> <input type="text" name="yanzheng" id="yangzheng" autofocus
+                                placeholder="请输入验证码" autocomplete="off" class="layui-input"><td><span id="yanzhengererror"></span></td>
+                   <td><input type="button" value="获取验证码" id="getmessage"/></td>
+                </tr>
+                <tr><td><input type="button" value="注册" id="add"><td><span id="info"></span> </td></tr>
+            </table>
+            <span id="message"></span>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        $(function (){
+            $("#dobookname").click(function (){
+                $("#errof").html("")
+                if($("#myinfo").val()===""){
+                    $("#errof").html("<font color='red' size='2'>不能为空</font>")
+                }else {
+                    var url = "opstudentinfo";
+                    var data ="studentid="+$("#lookbookname").val()+"&name="+$("#myinfo").val();
+                    $.ajax({
+                        type: "get",
+                        async: false, //同步请求
+                        url: url,
+                        data: data,
+                        timeout: 1000,
+                        success: function (dates) {
+                            $("#center").html("");
+                            let str = "";
+                            let sto="  <table class=\"table-1\"  id=\"mytable\"><tr>\n" +
+                                "                <th>序号</th>\n" +
+                                "                <th>学号</th>\n" +
+                                "                <th>姓名</th>\n" +
+                                "                <th>图书号</th>\n" +
+                                "                <th>图书名</th>\n" +
+                                "                <th>借书日期</th>\n" +
+                                "                <th>还书日期</th>\n" +
+                                "            </tr>\n" +
+                                "        </table>";
+                            $("#center").append(sto)
+                            $.each(dates,function(i,n){
+                                if(n.againdate==null){
+                                    n.againdate="";
+                                }
+                                str="<tr class=\"table-1\"><td>" + (i+1) + "</td><td>" + n.studentid + "</td><td>" + n.name + "</td><td>" + n.bookid + "</td><td>" + n.bookname + "</td><td>" + n.borrowdate + "</td><td>" + n.returndate  + "</td></tr>"
+                                $("#mytable").append(str)
+                            })
+                        },
+                    });
+                }
+            })
+        })
+    </script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .theall{
+            width: 1500px;
+            height: 800px;
+
+        }
+        .shang{
+            position: absolute;
+            width: 1500px;
+            height: 30px;
+        }
+        .center{
+            position: absolute;
+            margin-top: 30px;
+            width: 1500px;
+            height: 570px;
+        }
+        .bo{
+            position: absolute;
+            margin-top: 600px;
+            width: 1500px;
+            height: 90px;
+        }
+
+        /* Border styles */
+        .table-1 thead, .table-1 tr {
+            border-top-width: 1px;
+            border-top-style: solid;
+            border-top-color: #a8bfde;
+        }
+        .table-1 {
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: #a8bfde;
+        }
+
+        /* Padding and font style */
+        .table-1 td, .table-1 th {
+            padding: 5px 10px;
+            font-size: 12px;
+            font-family: Verdana;
+            color: #5b7da3;
+        }
+
+        /* Alternating background colors */
+        .table-1 tr:nth-child(even) {
+            background: #d3dfed
+        }
+        .table-1 tr:nth-child(odd) {
+            background: #FFF
+        }
+
+    </style>
+</head>
+<body>
+<div class="theall">
+    <!--查询栏-->
+    <div class="shang">
+        学号:<input type="text" value="" name="studentid" id="lookbookname" placeholder="请输入学号"><span id="errof"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        姓名:<input type="text" value="" name="name" id="myinfo" placeholder="请输入姓名"><span id="errof2"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="dobookname" value="查询该学生的借阅历史">
+    </div>
+    <div class="center" id="center">
+
+    </div>
+    <div class="bo"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        $(function (){
+            $("#dosel").click(function (){
+                $("#errof").html("")
+                if($("#myinfo").val()===""){
+                    $("#errof").html("<font color='red' size='2'>不能为空</font>")
+                }else {
+                    var url = "selectlikename";
+                    var data = "bookname="+$("#myinfo").val();
+                    $.ajax({
+                        type: "get",
+                        async: false, //同步请求
+                        url: url,
+                        data: data,
+                        timeout: 1000,
+                        success: function (dates) {
+                            $("#center").html("");
+                            let str = "";
+                            let sto="  <table class=\"table-1\"  id=\"mytable\"><tr>\n" +
+                                "                <th >序号</th>\n" +
+                                "                <th >图书号</th>\n" +
+                                "                <th>图书名</th>\n" +
+                                "                <th>作者</th>\n" +
+                                "                <th>出版社</th>\n" +
+                                "                <th>图书价格</th>\n" +
+                                "                <th>录入日期</th>\n" +
+                                "                <th>图书类型</th>\n" +
+                                "                <th>图书所在库</th>\n" +
+                                "            </tr>\n" +
+                                "        </table>";
+                            $("#center").append(sto)
+                            $.each(dates,function(i,n){
+                                if(n.againdate==null){
+                                    n.againdate="";
+                                }
+                                str="<tr class=\"table-1\"><td>" + (i+1) + "</td><td>" + n.bookid + "</td><td>" + n.bookname + "</td><td>" + n.autor + "</td><td>" + n.publisher + "</td><td>" + n.bookprice + "</td><td>" + n.publisherdate + "</td><td>" + n.booktype + "</td><td>" + n.stacks+ "</td></tr>"
+                                $("#mytable").append(str)
+                            })
+                        },
+                    });
+                }
+            })
+            $("#getprice").click(function (){
+                $("#errof3").html("")
+                if($("#myprice").val()===""){
+                    $("#errof3").html("<font color='red' size='2'>不能为空</font>")
+                }else {
+                    var url = "kgfdgdf";
+                    var data = "bookprice="+$("#myprice").val();
+                    $.ajax({
+                        type: "get",
+                        async: false, //同步请求
+                        url: url,
+                        data: data,
+                        timeout: 1000,
+                        success: function (dates) {
+                            $("#center").html("");
+                            let str = "";
+                            let sto="  <table class=\"table-1\"  id=\"mytable\"><tr>\n" +
+                                "                <th >序号</th>\n" +
+                                "                <th >图书号</th>\n" +
+                                "                <th>图书名</th>\n" +
+                                "                <th>作者</th>\n" +
+                                "                <th>出版社</th>\n" +
+                                "                <th>图书价格</th>\n" +
+                                "                <th>录入日期</th>\n" +
+                                "                <th>图书类型</th>\n" +
+                                "                <th>图书所在库</th>\n" +
+                                "            </tr>\n" +
+                                "        </table>";
+                            $("#center").append(sto)
+                            $.each(dates,function(i,n){
+                                if(n.againdate==null){
+                                    n.againdate="";
+                                }
+                                str="<tr class=\"table-1\"><td>" + (i+1) + "</td><td>" + n.bookid + "</td><td>" + n.bookname + "</td><td>" + n.autor + "</td><td>" + n.publisher + "</td><td>" + n.bookprice + "</td><td>" + n.publisherdate + "</td><td>" + n.booktype + "</td><td>" + n.stacks+ "</td></tr>"
+                                $("#mytable").append(str)
+                            })
+                        },
+                    });
+                }
+            })
+        })
+    </script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .theall{
+            width: 1500px;
+            height: 800px;
+
+        }
+        .shang{
+            position: absolute;
+            width: 1500px;
+            height: 30px;
+        }
+        .center{
+            position: absolute;
+            margin-top: 30px;
+            width: 1500px;
+            height: 570px;
+        }
+        .bo{
+            position: absolute;
+            margin-top: 600px;
+            width: 1500px;
+            height: 90px;
+        }
+
+        /* Border styles */
+        .table-1 thead, .table-1 tr {
+            border-top-width: 1px;
+            border-top-style: solid;
+            border-top-color: #a8bfde;
+        }
+        .table-1 {
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: #a8bfde;
+        }
+
+        /* Padding and font style */
+        .table-1 td, .table-1 th {
+            padding: 5px 10px;
+            font-size: 12px;
+            font-family: Verdana;
+            color: #5b7da3;
+        }
+
+        /* Alternating background colors */
+        .table-1 tr:nth-child(even) {
+            background: #d3dfed
+        }
+        .table-1 tr:nth-child(odd) {
+            background: #FFF
+        }
+
+    </style>
+</head>
+<body>
+<div class="theall">
+    <!--查询栏-->
+    <div class="shang">
+        <input type="text" value="" name="bookname" id="myinfo" placeholder="请输入书名"><input type="button" id="dosel" value="模糊查询"><span id="errof"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" value="" name="bookprice" id="myprice" placeholder="请输入图书价格"><span id="errof3"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" id="getprice" value="查询指定价格以内的图书">
+    </div>
+    <div class="center" id="center">
+
+    </div>
+    <div class="bo"></div>
+</div>
+</body>
+</html>

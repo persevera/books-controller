@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Model.Dao.Daointerface.borrow.borrowMapper">
+  <resultMap id="BaseResultMap" type="com.Model.Dao.MyClass.borrow.borrow">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="studentid" jdbcType="VARCHAR" property="studentid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="bookid" jdbcType="VARCHAR" property="bookid" />
+    <result column="bookname" jdbcType="VARCHAR" property="bookname" />
+    <result column="borrowdate" jdbcType="DATE" property="borrowdate" />
+    <result column="returndate" jdbcType="DATE" property="returndate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, studentid, name, bookid, bookname, borrowdate, returndate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from borrow
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from borrow
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.Model.Dao.MyClass.borrow.borrow">
+    insert into borrow (id, studentid, name, 
+      bookid, bookname, borrowdate, 
+      returndate)
+    values (#{id,jdbcType=INTEGER}, #{studentid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{bookid,jdbcType=VARCHAR}, #{bookname,jdbcType=VARCHAR}, #{borrowdate,jdbcType=DATE}, 
+      #{returndate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.Model.Dao.MyClass.borrow.borrow">
+    insert into borrow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="studentid != null">
+        studentid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="bookid != null">
+        bookid,
+      </if>
+      <if test="bookname != null">
+        bookname,
+      </if>
+      <if test="borrowdate != null">
+        borrowdate,
+      </if>
+      <if test="returndate != null">
+        returndate,
+      </if>
+      <if test="thstatus != null">
+        thstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="studentid != null">
+        #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bookid != null">
+        #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="bookname != null">
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowdate != null">
+        #{borrowdate,jdbcType=DATE},
+      </if>
+      <if test="returndate != null">
+        #{returndate,jdbcType=DATE},
+      </if>
+      <if test="thstatus != null">
+        #{thstatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.Model.Dao.MyClass.borrow.borrow">
+    update borrow
+    <set>
+      <if test="studentid != null">
+        studentid = #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bookid != null">
+        bookid = #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="bookname != null">
+        bookname = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowdate != null">
+        borrowdate = #{borrowdate,jdbcType=DATE},
+      </if>
+      <if test="returndate != null">
+        returndate = #{returndate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.Model.Dao.MyClass.borrow.borrow">
+    update borrow
+    set studentid = #{studentid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      bookid = #{bookid,jdbcType=VARCHAR},
+      bookname = #{bookname,jdbcType=VARCHAR},
+      borrowdate = #{borrowdate,jdbcType=DATE},
+      returndate = #{returndate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updatereturndate" parameterType="com.Model.Dao.MyClass.borrow.borrow">
+    update  borrow set returndate=date_add(borrowdate, interval 3 MONTH)  where studentid=#{studentid}
+  </update>
+  <select id="selectbook" resultType="java.lang.Integer">
+    select count(*) from bookinfo where bookid=#{bookid}
+  </select>
+  <select id="bookexit" resultType="java.lang.Integer">
+    select count(*) from borrow where bookid=#{bookid}
+  </select>
+  <select id="selectallinfo" resultType="com.Model.Dao.MyClass.borrow.borrow">
+    select *from borrow where studentid=#{studentid} and bookname=#{bookname}
+  </select>
+  <select id="selectop" resultType="java.lang.Integer">
+    select  count(*) from borrow where studentid=#{studentid} and name=#{name} and  bookname=#{bookname}
+  </select>
+  <insert id="insertstatus">
+    update  borrow  set thstatus=#{thstatus} where   studentid=#{studentid} and  bookname=#{bookname}
+  </insert>
+  <update id="againdate"  parameterType="com.Model.Dao.MyClass.borrow.borrow">
+    update  borrow set againdate=date_add(returndate, interval 3 MONTH)  where studentid=#{studentid} and bookname=#{bookname}
+  </update>
+
+<select id="selectcountbooktype" resultType="java.lang.Integer">
+  SELECT COUNT(*)  from borrow b1,bookinfo b2 WHERE b1.bookid=b2.bookid  and b2.booktype=#{type} and b1.name=#{name} and b1.studentid=#{studentid};
+</select>
+
+ <select id="findbooktype" resultType="java.lang.String">
+select  booktype from bookinfo where bookid=#{bookid}
+ </select>
+  <delete id="deleteinfo">
+    delete from borrow where studentid=#{studentid} and  bookid=#{bookid}
+  </delete>
+  <select id="selectborrowlist" resultType="com.Model.Dao.MyClass.borrow.borrow">
+    select *from borrow where studentid=#{studentid}
+  </select>
+  <select id="selectbybooknamea" resultType="com.Model.Dao.MyClass.borrow.borrow">
+    select *from borrow where bookname=#{bookname}
+  </select>
+</mapper>

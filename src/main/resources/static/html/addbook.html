@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        body {
+            /*width: 100%;*/
+            /*height: 100%;*/
+            background: url("/static/images/background.jpg") no-repeat;
+            /*background: url("static/images/a.png") no-repeat;*/
+            background-size: cover;
+        }
+
+        #login_form {
+            width: 400px;
+            height: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            background-color: #f2f2f2;
+            opacity: 0.9;
+        }
+
+    </style>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        $(function () {
+                $("#addbook").click(function (){
+                    $("#bookiderror").html("");
+                    if($("#bookid").val()===""){
+                        $("#bookiderror").html("<font size='0.9' color='red'>不能为空</font>");
+                    }
+                    $("#booknameerror").html("");
+                    if($("#bookname").val()===""){
+                        $("#booknameerror").html("<font size='0.9' color='red'>不能为空</font>");
+                    }
+                    $("#autorerror").html("");
+                    if($("#autor").val()===""){
+                        $("#autorerror").html("<font size='0.9' color='red'>不能为空</font>");
+                    }
+                    $("#publisherererror").html("");
+                    if($("#publisher").val()===""){
+                        $("#publisherererror").html("<font size='0.9' color='red'>不能为空</font>");
+                    }
+                    $("#publisherdateerror").html("");
+                    if($("#publisherdate").val()===""){
+                        $("#publisherdateerror").html("<font size='0.9' color='red'>不能为空</font>");
+                    }
+                    $("#bookpriceerror").html("");
+                    if($("#bookprice").val()===""){
+                        $("#bookpriceerror").html("<font size='0.9' color='red'>不能为空</font>");
+                    }
+                    $("#stackseerror").html("");
+                    if($("#stacks").val()===""){
+                        $("#stackseerror").html("<font size='0.9' color='red'>不能为空</font>");
+                    } else{
+                        var url = "addbooks";
+                        var data = "bookid="+$("#bookid").val()+"&bookname="+$("#bookname").val()+"&autor="+$("#autor").val()+"&publisher="+$("#publisher").val()+"&publisherdate="+$("#publisherdateerror").val()+"&bookprice="+$("#bookprice").val()+"&booktype="+$("#booktype").val()+"&stacks="+$("#stacks").val();
+                        $.ajax({
+                            type: "get",
+                            async: false, //同步请求
+                            url: url,
+                            data: data,
+                            timeout: 1000,
+                            success: function (dates) {
+                              if(dates=="1"){
+                                  $("#message").html("<font size='0.9' color='red'>该书已经添入过了")
+                              }else {
+                                  $("#message").html("<font size='0.9' color='red'>添入成功</font>")
+                              }
+                            },
+                        });
+                    }
+                })
+            })
+    </script>
+</head>
+<body>
+
+<div id="wrapper">
+    <div class="layui-container" id="login_form">
+        <div>
+            <h2>录入新书</h2>
+        </div>
+        <form class="layui-form" id="form" method="get" action="addbooks">
+            <table>
+                <tr>
+                    <td><label class="layui-form-label">图书号:</label></td>
+                    <td> <input type="text" name="bookid" id="bookid" autofocus
+                                placeholder="请输入图书号" autocomplete="off" class="layui-input"><td><span id="bookiderror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">图书名:</label></td>
+                    <td> <input type="text" name="bookname" id="bookname" autofocus
+                                placeholder="请输入图书名" autocomplete="off" class="layui-input"><td><span id="booknameerror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">作者:</label></td>
+                    <td> <input type="text" name="autor" id="autor" autofocus
+                                placeholder="请输入作者" autocomplete="off" class="layui-input"><td><span id="autorerror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">出版社名:</label></td>
+                    <td> <input type="text" name="publisher" id="publisher" autofocus
+                                placeholder="请输入出版社" autocomplete="off" class="layui-input"><td><span id="publisherererror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">出版日期:</label></td>
+                    <td> <input type="date" name="publisherdate" id="publisherdate" autofocus
+                                 autocomplete="off" class="layui-input"><td><span id="publisherdateerror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">图书价格:</label></td>
+                    <td> <input type="text" name="bookprice" id="bookprice" autofocus
+                                placeholder="请输入图书价格" autocomplete="off" class="layui-input"><td><span id="bookpriceerror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">图书类别:</label></td>
+                    <td><select name="booktype" id="booktype">
+                        <option value="自然科学图书">自然科学图书</option>
+                        <option value="社会科学图书">社会科学图书</option>
+                        <option value="小说类型图书">小说类型图书</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">存放的书库号:</label></td>
+                    <td> <input type="text" name="stacks" id="stacks" autofocus
+                                placeholder="请输入存放的书库号" autocomplete="off" class="layui-input"><td><span id="stackseerror"></span></td>
+                </tr>
+                <tr><td><input type="button" value="录入" id="addbook"><td><span id="info"></span> </td></tr>
+            </table>
+            <span id="message"></span>
+        </form>
+    </div>
+</div>
+</body>
+</html>

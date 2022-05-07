@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Model.Dao.Daointerface.bookinterface.bookMapper">
+  <resultMap id="BaseResultMap" type="com.Model.Dao.MyClass.bookinfo.book">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bookid" jdbcType="VARCHAR" property="bookid" />
+    <result column="bookname" jdbcType="VARCHAR" property="bookname" />
+    <result column="autor" jdbcType="VARCHAR" property="autor" />
+    <result column="publisher" jdbcType="VARCHAR" property="publisher" />
+    <result column="bookprice" jdbcType="DECIMAL" property="bookprice" />
+    <result column="publisherdate" jdbcType="DATE" property="publisherdate" />
+    <result column="booktype" jdbcType="VARCHAR" property="booktype" />
+    <result column="stacks" jdbcType="VARCHAR" property="stacks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, bookid, bookname, autor, publisher, bookprice, publisherdate, booktype, stacks
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bookinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bookinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.Model.Dao.MyClass.bookinfo.book">
+    insert into bookinfo (id, bookid, bookname, 
+      autor, publisher, bookprice, 
+      publisherdate, booktype, stacks
+      )
+    values (#{id,jdbcType=INTEGER}, #{bookid,jdbcType=VARCHAR}, #{bookname,jdbcType=VARCHAR}, 
+      #{autor,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR}, #{bookprice,jdbcType=DECIMAL}, 
+      #{publisherdate,jdbcType=DATE}, #{booktype,jdbcType=VARCHAR}, #{stacks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.Model.Dao.MyClass.bookinfo.book">
+    insert into bookinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bookid != null">
+        bookid,
+      </if>
+      <if test="bookname != null">
+        bookname,
+      </if>
+      <if test="autor != null">
+        autor,
+      </if>
+      <if test="publisher != null">
+        publisher,
+      </if>
+      <if test="bookprice != null">
+        bookprice,
+      </if>
+      <if test="publisherdate != null">
+        publisherdate,
+      </if>
+      <if test="booktype != null">
+        booktype,
+      </if>
+      <if test="stacks != null">
+        stacks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bookid != null">
+        #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="bookname != null">
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="autor != null">
+        #{autor,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null">
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="bookprice != null">
+        #{bookprice,jdbcType=DECIMAL},
+      </if>
+      <if test="publisherdate != null">
+        #{publisherdate,jdbcType=DATE},
+      </if>
+      <if test="booktype != null">
+        #{booktype,jdbcType=VARCHAR},
+      </if>
+      <if test="stacks != null">
+        #{stacks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.Model.Dao.MyClass.bookinfo.book">
+    update bookinfo
+    <set>
+      <if test="bookid != null">
+        bookid = #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="bookname != null">
+        bookname = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="autor != null">
+        autor = #{autor,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null">
+        publisher = #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="bookprice != null">
+        bookprice = #{bookprice,jdbcType=DECIMAL},
+      </if>
+      <if test="publisherdate != null">
+        publisherdate = #{publisherdate,jdbcType=DATE},
+      </if>
+      <if test="booktype != null">
+        booktype = #{booktype,jdbcType=VARCHAR},
+      </if>
+      <if test="stacks != null">
+        stacks = #{stacks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.Model.Dao.MyClass.bookinfo.book">
+    update bookinfo
+    set bookid = #{bookid,jdbcType=VARCHAR},
+      bookname = #{bookname,jdbcType=VARCHAR},
+      autor = #{autor,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      bookprice = #{bookprice,jdbcType=DECIMAL},
+      publisherdate = #{publisherdate,jdbcType=DATE},
+      booktype = #{booktype,jdbcType=VARCHAR},
+      stacks = #{stacks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectcount" resultType="java.lang.Integer">
+    select count(*)
+    from bookinfo
+    where bookid = #{bookid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectlike" resultType="com.Model.Dao.MyClass.bookinfo.book">
+    select *from bookinfo where bookname like #{bookname}
+  </select>
+  <select id="selectbookprice" resultType="com.Model.Dao.MyClass.bookinfo.book">
+    select *from  bookinfo where bookprice &lt;=  #{bookprice}
+  </select>
+</mapper>

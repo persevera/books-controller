@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <head></head>
+    <style>
+        body {
+            /*width: 100%;*/
+            /*height: 100%;*/
+            background: url("/static/images/rc.png") no-repeat;
+            /*background: url("static/images/a.png") no-repeat;*/
+            background-size: cover;
+        }
+
+        #login_form {
+            width: 400px;
+            height: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            background-color: #f2f2f2;
+            opacity: 0.9;
+        }
+    </style>
+
+</head>
+<script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
+<script type="text/javascript">
+    $(function (){
+        $("#addinfo").click(function (){
+            $("#studentiderror").html("");
+            if($("#studentid").val()===""){
+                $("#studentiderror").html("<font size='0.9' color='red'>不能为空</font>");
+                return false;
+            }
+            $("#nameerror").html("");
+            if($("#name").val()===""){
+                $("#nameerror").html("<font size='0.9' color='red'>不能为空</font>");
+                return false;
+            }
+            $("#booknameerror").html("");
+            if($("#bookname").val()===""){
+                $("#booknameerror").html("<font size='0.9' color='red'>不能为空</font>");
+                return false;
+            }else{
+                $("#form").submit();
+            }
+        })
+    })
+</script>
+<body>
+
+<div id="wrapper">
+    <div class="layui-container" id="login_form">
+        <div>
+            <h2><font color="red">续借</font></h2>
+        </div>
+        <form class="layui-form" id="form" method="get" action="borrowagain">
+            <table>
+                <tr>
+                    <td><label class="layui-form-label">学号:</label></td>
+                    <td> <input type="text" name="studentid" id="studentid" autofocus
+                                placeholder="请输入学号" autocomplete="off" class="layui-input"><td><span id="studentiderror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">姓名:</label></td>
+                    <td> <input type="text" name="name" id="name" autofocus
+                                placeholder="请输入姓名" autocomplete="off" class="layui-input"><td><span id="nameerror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">图书名:</label></td>
+                    <td> <input type="text" name="bookname" id="bookname" autofocus
+                                placeholder="请输图书名" autocomplete="off" class="layui-input"><td><span id="booknameerror"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="layui-form-label">续借日期:</label></td>
+                    <td> <input type="date" name="againdate" id="borrowdate"></td><td><span id="borrowdateerror"></span ></td>
+                </tr>
+                <tr>
+                    <td> <input type="hidden" name="thstatus" value="未续借"></td>
+                </tr>
+                <tr><td></td><td><input type="button" value="续借" id="addinfo"></td></tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>
